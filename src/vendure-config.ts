@@ -4,11 +4,13 @@ import {
     DefaultJobQueuePlugin,
     DefaultSearchPlugin,
     VendureConfig,
+    NativeAuthenticationStrategy,
 } from '@vendure/core'; 
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import path from 'path';
+import { GoogleAuthenticationStrategy } from './GoogleAuthenticationStrategy';
 
 export const config: VendureConfig = {
     apiOptions: {
@@ -29,6 +31,11 @@ export const config: VendureConfig = {
         shopApiDebug: true,// turn this off for production
     },
     authOptions: {
+        shopAuthenticationStrategy: [
+            new NativeAuthenticationStrategy(),
+            new GoogleAuthenticationStrategy(process.env.GOOGLE_CLIENT_ID!),
+        ],
+        requireVerification: false,
         superadminCredentials: {
             identifier: process.env.SUPERADMIN_IDENTIFIER!,
             password: process.env.SUPERADMIN_PASSWORD!,
