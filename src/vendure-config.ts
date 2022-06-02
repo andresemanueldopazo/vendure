@@ -12,6 +12,7 @@ import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import path from 'path';
 import { GoogleAuthenticationStrategy } from './GoogleAuthenticationStrategy';
 import { FacebookAuthenticationStrategy } from './FacebookAuthenticationStrategy';
+import { StripePlugin } from '@vendure/payments-plugin/package/stripe';
 
 export const config: VendureConfig = {
     apiOptions: {
@@ -62,6 +63,12 @@ export const config: VendureConfig = {
     },
     customFields: {},
     plugins: [
+        StripePlugin.init({
+            apiKey: process.env.YOUR_STRIPE_SECRET_KEY!,
+            webhookSigningSecret: process.env.YOUR_STRIPE_WEBHOOK_SIGNING_SECRET!,
+            // This prevents different customers from using the same PaymentIntent
+            storeCustomersInStripe: true,
+          }),
         AssetServerPlugin.init({
             route: 'assets',
             assetUploadDir: path.join(__dirname, '../static/assets'),
