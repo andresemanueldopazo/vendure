@@ -11,6 +11,7 @@ import { AssetServerPlugin } from '@vendure/asset-server-plugin';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import path from 'path';
 import { GoogleAuthenticationStrategy } from './GoogleAuthenticationStrategy';
+import { FacebookAuthenticationStrategy } from './FacebookAuthenticationStrategy';
 
 export const config: VendureConfig = {
     apiOptions: {
@@ -34,6 +35,11 @@ export const config: VendureConfig = {
         shopAuthenticationStrategy: [
             new NativeAuthenticationStrategy(),
             new GoogleAuthenticationStrategy(process.env.GOOGLE_CLIENT_ID!),
+            new FacebookAuthenticationStrategy({
+                appId: process.env.FACEBOOK_APP_ID!,
+                appSecret: process.env.FACEBOOK_APP_SECRET!,
+                clientToken: process.env.FACEBOOK_CLIENT_TOKEN!
+            }),
         ],
         requireVerification: false,
         superadminCredentials: {
