@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import {
     dummyPaymentHandler,
     DefaultJobQueuePlugin,
@@ -11,7 +12,7 @@ import path from 'path';
 
 export const config: VendureConfig = {
     apiOptions: {
-        port: 3001,
+        port: parseInt(process.env.API_PORT!),
         adminApiPath: 'admin-api',
         adminApiPlayground: {
             settings: {
@@ -29,8 +30,8 @@ export const config: VendureConfig = {
     },
     authOptions: {
         superadminCredentials: {
-            identifier: 'superadmin',
-            password: 'superadmin',
+            identifier: process.env.SUPERADMIN_IDENTIFIER!,
+            password: process.env.SUPERADMIN_PASSWORD!,
         },
         cookieOptions: {
           secret: process.env.COOKIE_SECRET || 'cookie-secret',
@@ -63,14 +64,14 @@ export const config: VendureConfig = {
             globalTemplateVars: {
                 // The following variables will change depending on your storefront implementation
                 fromAddress: '"example" <noreply@example.com>',
-                verifyEmailAddressUrl: 'http://localhost:8080/verify',
-                passwordResetUrl: 'http://localhost:8080/password-reset',
-                changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
+                verifyEmailAddressUrl: process.env.VERIFY_EMAIL_ADDRESS_URL,
+                passwordResetUrl: process.env.PASSWORD_RESET_URL,
+                changeEmailAddressUrl: process.env.CHANGE_EMAIL_ADDRESS_URL
             },
         }),
         AdminUiPlugin.init({
             route: 'admin',
-            port: 3002,
+            port: parseInt(process.env.ADMIN_PORT!)
         }),
     ],
 };

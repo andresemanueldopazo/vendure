@@ -4,3 +4,4 @@ static/email/test-emails
 vendure.sqlite-shm
 vendure.sqlite-wal
 vendure.sqlite
+.env

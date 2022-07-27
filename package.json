@@ -17,6 +17,7 @@
     "@vendure/core": "1.6.4",
     "@vendure/email-plugin": "1.6.4",
     "better-sqlite3": "7.6.2",
+    "dotenv": "^16.0.1",
     "typescript": "4.3.5"
   },
   "devDependencies": {
