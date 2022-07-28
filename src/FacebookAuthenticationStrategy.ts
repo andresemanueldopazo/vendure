@@ -69,7 +69,7 @@ export class FacebookAuthenticationStrategy implements AuthenticationStrategy<Fa
     const uresp = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,first_name,last_name`);
     const uresult = (await uresp.json()) as { id?: string; email: string; first_name: string; last_name: string };
 
-    if (!uresult.id) {
+    if (!uresult.id || !uresult.email) {
       return false;
     }
 
